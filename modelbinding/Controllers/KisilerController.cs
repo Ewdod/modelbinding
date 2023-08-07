@@ -37,5 +37,35 @@ namespace modelbinding.Controllers
             }
             return View();
         }
+
+        public IActionResult Sil(Kisi kisi)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(); // 400 nolu hata kodu dondurur
+            }
+
+            if (kisiler.Any(k=>k.Ad == kisi.Ad)){
+
+                return NotFound(); // 404 bulunamadi dondurur
+            }
+            return View(kisi); // 200 OK
+        }
+        // sadece form dan tiklanarak tetiklenmesini saglar linke silonay girerek enter ile silinemez
+        [HttpPost] 
+        public IActionResult SilOnay(Kisi kisi)
+        {
+            var silinecek = kisiler.FirstOrDefault(k => k.Ad == kisi.Ad);
+            if (silinecek == null)
+            {
+                return NotFound();
+            }
+            kisiler.Remove(silinecek);
+
+            // temp data diye bir deger var ve bir defaya mahsus tutuyor hafizada action dan actiona veri aktarmaya yariyor
+            //TempData["Mesaj"] = silinecek.Ad + " silinmistir";
+            TempData["Mesaj"] = $"\"{silinecek.Ad}\" adli kisi basariyla silinmisttir";
+            return RedirectToAction("Index");
+        }
     }
 }

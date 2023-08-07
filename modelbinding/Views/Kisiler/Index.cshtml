@@ -2,13 +2,27 @@
 @{
     ViewData["Title"] = "Kisi Listesi";
 }
-<h1>Kisiler</h1>
 <a asp-action="Yeni">Yeni kisi oustur</a>
+<h1>Kisiler</h1>
+@if (TempData["Mesaj"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Mesaj"];
+    </div>
 
-<ul>
+}
+
+<ul class="list-unstyled">
     @foreach (var kisi in Model)
     {
-        <li>@kisi.Ad</li>
+        <li class="d-flex justify-content-between">
+            @kisi.Ad
+            <a class="btn btn-danger" asp-action="Sil" asp-route-ad="@kisi.Ad">Sil</a>
+            @*parametre ile gonderme yapiyor*@
+
+
+
+        </li>
     }
 </ul>
 
