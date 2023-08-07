@@ -1,0 +1,13 @@
+﻿@model List<Kisi>
+@{
+    ViewData["Title"] = "Kisi Listesi";
+}
+<h1>Kisiler</h1>
+
+<ul>
+    @foreach (var kisi in Model)
+    {
+        <li>@kisi.Ad</li>
+    }
+</ul>
+
